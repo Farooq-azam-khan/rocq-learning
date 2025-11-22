@@ -32,3 +32,11 @@ Definition next_working_day (d: day) : day :=
 Compute (next_working_day fri).
 Compute (next_working_day (next_working_day fri)).
 Compute (next_working_day (next_working_day fri)) = tue. 
+
+Example tues_next_workding_day_after_mon:
+  (next_working_day mon) = tue.
+Proof. 
+  simpl. reflexivity.
+Qed.
+
+
