@@ -148,15 +148,31 @@ Check mult_n_Sm.
 Check plus_n_Sm.
 
 Theorem plus_assoc : forall (n m o: nat), plus (plus n m) o = plus n (plus m o).
-Proof. Admitted.
+Proof.
+  intros n m o. induction n.  
+  -  simpl. reflexivity.  
+  - simpl. rewrite -> IHn. reflexivity.
+Qed.
 
 Theorem plus_n_succ_m : forall (n m: nat) , succ (plus n m) = plus n (succ m).
 Proof.
-Admitted.
+   intros n m. induction n.   
+   - simpl. reflexivity.   
+   - simpl. rewrite -> IHn.reflexivity.  
+Qed. 
+
+Theorem plus_n_zero : forall (n: nat), plus n zero = n.
+Proof. intros n. induction n. 
+ - simpl. reflexivity. 
+ - simpl. rewrite IHn.reflexivity. 
+Qed. 
 
 Theorem plus_sym : forall (n m: nat), plus n m = plus m n.
 Proof.
-Admitted .
+  intros n m. induction n.  
+  - simpl. rewrite -> plus_n_zero. reflexivity. 
+  - simpl. rewrite IHn.  rewrite -> plus_n_succ_m. reflexivity.
+Qed.   
 
 Theorem mult_n_succ_m : forall (n m: nat), plus (mult n m) n = mult n (succ m).
 Proof.
