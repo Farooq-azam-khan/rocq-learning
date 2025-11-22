@@ -106,8 +106,52 @@ Theorem plus_one_n : forall (n: nat) , plus one n = succ n.
 Proof. intros n. reflexivity. Qed.
 
 Theorem mult_one_n : forall (n: nat) , mult one n = n.
-Proof. intros n. reflexivity. 
+Proof. intros n. reflexivity.
+Qed.
+
+Theorem plus_id : forall (n m: nat), n=m -> plus n n = plus m m.
+Proof.
+  intros n m.
+  intros H.
+  (*rewrite -> H.*)
+  rewrite <- H.
+  reflexivity.
+Qed.
+
+Theorem plus_id_3 : forall (n m o: nat), n = m -> m = o ->  plus n m = plus m o.
+Proof.
+  intros n m o. intros H1 H2.
+  rewrite -> H1.
+  rewrite -> H2.
+  reflexivity.
+Qed.
+
+Theorem mult_n_zero: forall (n : nat) , mult n zero = zero.
+Proof.
+  intros n. induction n.
+  - simpl. reflexivity.
+  -  simpl.  rewrite IHn. simpl. reflexivity.
+Qed.
+
+
+Theorem mult_n_zero_m_zero:  forall (n m : nat) , plus (mult n zero)  (mult m zero) = zero.
+Proof.
+  intros n m.
+  rewrite -> mult_n_zero. 
+  rewrite -> mult_n_zero.
+  simpl. 
+  reflexivity. 
 Qed. 
+
+Check mult_n_Sm. 
+
+Theorem mult_n_succ_m : forall (n m: nat), plus (mult n m) n = mult n (succ m). 
+Proof. 
+  Admitted.   
+
+Theorem mult_one_thrm : forall (n : nat) , mult n one = n.
+Proof.
+Admitted. 
 
 
 End NatM.
