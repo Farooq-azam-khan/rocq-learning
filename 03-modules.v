@@ -130,28 +130,51 @@ Theorem mult_n_zero: forall (n : nat) , mult n zero = zero.
 Proof.
   intros n. induction n.
   - simpl. reflexivity.
-  -  simpl.  rewrite IHn. simpl. reflexivity.
+  - simpl. rewrite IHn. simpl. reflexivity.
 Qed.
 
 
 Theorem mult_n_zero_m_zero:  forall (n m : nat) , plus (mult n zero)  (mult m zero) = zero.
 Proof.
   intros n m.
-  rewrite -> mult_n_zero. 
   rewrite -> mult_n_zero.
-  simpl. 
-  reflexivity. 
-Qed. 
+  rewrite -> mult_n_zero.
+  simpl.
+  reflexivity.
+Qed.
 
-Check mult_n_Sm. 
+Check mult_n_Sm.
 
-Theorem mult_n_succ_m : forall (n m: nat), plus (mult n m) n = mult n (succ m). 
-Proof. 
-  Admitted.   
+Check plus_n_Sm.
 
-Theorem mult_one_thrm : forall (n : nat) , mult n one = n.
+Theorem plus_assoc : forall (n m o: nat), plus (plus n m) o = plus n (plus m o).
+Proof. Admitted.
+
+Theorem plus_n_succ_m : forall (n m: nat) , succ (plus n m) = plus n (succ m).
 Proof.
-Admitted. 
+Admitted.
+
+Theorem plus_sym : forall (n m: nat), plus n m = plus m n.
+Proof.
+Admitted .
+
+Theorem mult_n_succ_m : forall (n m: nat), plus (mult n m) n = mult n (succ m).
+Proof.
+  intros n m. induction n.
+- simpl. reflexivity.
+- simpl. rewrite <- IHn.
+  rewrite <- plus_n_succ_m.
+  rewrite <- plus_n_succ_m.
+  rewrite -> plus_assoc.
+  rewrite -> plus_assoc.
+  rewrite -> (plus_sym n m).
+  reflexivity.
+Qed.
+
+Theorem mult_one_thrm : forall (n : nat) , mult n (succ zero) = n.
+Proof.
+  intros n. simpl.  rewrite <- mult_n_succ_m. rewrite -> mult_n_zero. simpl. reflexivity.
+Qed.   
 
 
 End NatM.
